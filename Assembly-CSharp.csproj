@@ -62,9 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CoinController.cs" />
-    <Compile Include="Assets\CoinControls.cs" />
-    <Compile Include="Assets\Coins.cs" />
+    <Compile Include="Assets\Scripts\CoinController.cs" />
+    <Compile Include="Assets\Scripts\CoinControls.cs" />
+    <Compile Include="Assets\Scripts\Coins.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>J:/Charlie's idea workshop/Coin Game/Coin Game/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
