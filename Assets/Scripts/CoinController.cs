@@ -25,6 +25,12 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     public Text keyDisplayText7;
     public Text keyDisplayText8;
 
+    private AudioSource audioSource;
+
+    public AudioClip wrongChoice;
+    public AudioClip correctChoice;
+    public AudioClip menuSelect;
+
     private IEnumerator coinDisplayTime;      // Make public?
 
     void Start()
@@ -36,6 +42,8 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         setCoinsValues();   //sets the controls in a method.
         //Associate each of the keys with a coin/element.
 
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -44,7 +52,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         print("Update start!");
         Controls();
         print("Controls");
-        if (keyPressed == correctNumber) { points++; print("increase points " + points); Reset(); }
+        if (keyPressed == correctNumber) { points++; print("increase points " + points); CorrectChoiceaudio(); Reset(); }
         //else if (keyPressed > correctNumber || keyPressed < correctNumber) { points++; print(points); }  // It is still printing the wrong button constantly.
         // Also change the displayed number (Reset) if you hit the wrong key.
 
@@ -109,6 +117,8 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 1 has been pressed");
             keyPressed = 1;
             keyDisplayText1.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
+            // PLAY AUDIO call audio method down bellow if not currently playing audio then play audio clip.
         }
 
         if (Input.GetButtonDown("Key2"))
@@ -116,6 +126,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 2 has been pressed");
             keyPressed = 2;
             keyDisplayText2.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         if (Input.GetButtonDown("Key3"))
@@ -123,6 +134,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 3 has been pressed");
             keyPressed = 3;
             keyDisplayText3.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         if (Input.GetButtonDown("Key4"))
@@ -130,6 +142,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 4 has been pressed");
             keyPressed = 4;
             keyDisplayText4.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         if (Input.GetButtonDown("Key5"))
@@ -137,6 +150,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 5 has been pressed");
             keyPressed = 5;
             keyDisplayText5.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         if (Input.GetButtonDown("Key6"))
@@ -144,6 +158,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 6 has been pressed");
             keyPressed = 6;
             keyDisplayText6.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         if (Input.GetButtonDown("Key7"))
@@ -151,6 +166,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 7 has been pressed");
             keyPressed = 7;
             keyDisplayText7.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         if (Input.GetButtonDown("Key8"))
@@ -158,10 +174,24 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             print("Key 8 has been pressed");
             keyPressed = 8;
             keyDisplayText8.GetComponent<Text>().color = Color.green;
+            WrongKeyaudio();
         }
 
         //else { keyPressed = -1; }
         return; // Is this needed?
+    }
+
+    private void WrongKeyaudio()
+    {
+        audioSource.clip = wrongChoice;
+        audioSource.Play();
+    }
+
+    private void CorrectChoiceaudio()
+    {
+        print("Correct Choice Audio!");
+        audioSource.clip = correctChoice;
+        audioSource.Play();
     }
 
     void Reset()
