@@ -7,7 +7,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
 {
     public GameObject[] coins;   // 8 coins. 1p, 2p, 5p, 10p, 20p, 50, £1, £2.
 
-    public int coinSelected;
+    public int coinSelected;   // Maybe these need to be -1 too? This shouldn't affect things.
     public int correctNumber;
     public int keyPressed = -1; // Not sure if it should stay as -1.
     public int points = 0;
@@ -49,14 +49,18 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     // Update is called once per frame
     void Update()
     {
-        print("Update start!");
+        //print("Update start!");
         Controls();
-        print("Controls");
+        //print("Controls");
         if (keyPressed == correctNumber) { points++; print("increase points " + points); CorrectChoiceaudio(); Reset(); }
         //else if (keyPressed > correctNumber || keyPressed < correctNumber) { points++; print(points); }  // It is still printing the wrong button constantly.
         // Also change the displayed number (Reset) if you hit the wrong key.
 
+        //else if (keyPressed != correctNumber) { print("minus points"); } // Moved to the wrong audio method bellow controls.
+
         //print(timer);
+        print(points);
+        print("correct Number" + correctNumber);
 
         scoreTextNumber.text = points.ToString();
 
@@ -115,7 +119,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key1"))
         {
             print("Key 1 has been pressed");
-            keyPressed = 1;
+            keyPressed = 0;
             keyDisplayText1.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
             // PLAY AUDIO call audio method down bellow if not currently playing audio then play audio clip.
@@ -124,7 +128,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key2"))
         {
             print("Key 2 has been pressed");
-            keyPressed = 2;
+            keyPressed = 1;
             keyDisplayText2.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -132,7 +136,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key3"))
         {
             print("Key 3 has been pressed");
-            keyPressed = 3;
+            keyPressed = 2;
             keyDisplayText3.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -140,7 +144,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key4"))
         {
             print("Key 4 has been pressed");
-            keyPressed = 4;
+            keyPressed = 3;
             keyDisplayText4.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -148,7 +152,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key5"))
         {
             print("Key 5 has been pressed");
-            keyPressed = 5;
+            keyPressed = 4;
             keyDisplayText5.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -156,7 +160,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key6"))
         {
             print("Key 6 has been pressed");
-            keyPressed = 6;
+            keyPressed = 5;
             keyDisplayText6.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -164,7 +168,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key7"))
         {
             print("Key 7 has been pressed");
-            keyPressed = 7;
+            keyPressed = 6;
             keyDisplayText7.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -172,7 +176,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         if (Input.GetButtonDown("Key8"))
         {
             print("Key 8 has been pressed");
-            keyPressed = 8;
+            keyPressed = 7;
             keyDisplayText8.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
         }
@@ -185,6 +189,9 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     {
         audioSource.clip = wrongChoice;
         audioSource.Play();
+        points--;
+        print("minus points" + points);
+        //Reset(); // Remove this later.
     }
 
     private void CorrectChoiceaudio()
