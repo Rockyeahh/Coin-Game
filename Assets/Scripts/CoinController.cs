@@ -13,7 +13,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     public int points = 0;
     public int timer = 5;
 
-    public bool coinPressed; // It needs to check what input is pressed. Maybe in a specific method and checked in update or something.
+    public bool coinAnswer = false;
 
     public Text scoreTextNumber;
     public Text keyDisplayText1;    // There is alot of these and thus a better way should done during the polish stage.
@@ -52,15 +52,17 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         //print("Update start!");
         Controls();
         //print("Controls");
-        if (keyPressed == correctNumber) { points++; print("increase points " + points); CorrectChoiceaudio(); Reset(); }
+        if (keyPressed == correctNumber) { coinAnswer = true; CorrectChoiceaudio(); Reset(); }
+        //else { coinAnswer = false; }
+
         //else if (keyPressed > correctNumber || keyPressed < correctNumber) { points++; print(points); }  // It is still printing the wrong button constantly.
         // Also change the displayed number (Reset) if you hit the wrong key.
 
         //else if (keyPressed != correctNumber) { print("minus points"); } // Moved to the wrong audio method bellow controls.
 
         //print(timer);
-        print(points);
-        print("correct Number" + correctNumber);
+        //print(points);
+        //print("correct Number " + correctNumber);
 
         scoreTextNumber.text = points.ToString();
 
@@ -189,16 +191,18 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     {
         audioSource.clip = wrongChoice;
         audioSource.Play();
-        points--;
-        print("minus points" + points);
-        //Reset(); // Remove this later.
+        //if (coinAnswer == false) { points--; }
+        //points--;
+        //print("minus points" + points);
     }
 
     private void CorrectChoiceaudio()
     {
-        print("Correct Choice Audio!");
+        //print("Correct Choice Audio!");
         audioSource.clip = correctChoice;
         audioSource.Play();
+        points++;
+        print("increase points " + points);
     }
 
     void Reset()
@@ -206,6 +210,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         keyPressed = -1;
         timer = 5;
         coins[coinSelected].SetActive(false);
+        //coinAnswer = false;
 
         keyDisplayText1.GetComponent<Text>().color = Color.black;
         keyDisplayText2.GetComponent<Text>().color = Color.black;
