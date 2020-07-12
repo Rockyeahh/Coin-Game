@@ -29,7 +29,6 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
 
     public AudioClip wrongChoice;
     public AudioClip correctChoice;
-    public AudioClip menuSelect;
 
     private IEnumerator coinDisplayTime;      // Make public?
 
