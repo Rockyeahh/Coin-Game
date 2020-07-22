@@ -281,8 +281,8 @@ InputManager:
     m_Name: Key1
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '!'
-    positiveButton: 1
+    negativeButton: 1
+    positiveButton: q
     altNegativeButton: '[1]'
     altPositiveButton: 
     gravity: 1000
@@ -297,8 +297,8 @@ InputManager:
     m_Name: Key2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '"'
-    positiveButton: 2
+    negativeButton: 1
+    positiveButton: w
     altNegativeButton: '[2]'
     altPositiveButton: 
     gravity: 1000
@@ -313,8 +313,8 @@ InputManager:
     m_Name: Key3
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 3
+    negativeButton: 3
+    positiveButton: e
     altNegativeButton: '[3]'
     altPositiveButton: 
     gravity: 1000
@@ -328,8 +328,8 @@ InputManager:
   - serializedVersion: 3
     m_Name: Key4
     descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: $
+    descriptiveNegativeName: 4
+    negativeButton: r
     positiveButton: 4
     altNegativeButton: '[4]'
     altPositiveButton: 
@@ -344,8 +344,8 @@ InputManager:
   - serializedVersion: 3
     m_Name: Key5
     descriptiveName: 
-    descriptiveNegativeName: 
-    negativeButton: '%'
+    descriptiveNegativeName: 5
+    negativeButton: a
     positiveButton: 5
     altNegativeButton: '[5]'
     altPositiveButton: 
@@ -361,8 +361,8 @@ InputManager:
     m_Name: Key6
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: ^
-    positiveButton: 6
+    negativeButton: 6
+    positiveButton: s
     altNegativeButton: '[6]'
     altPositiveButton: 
     gravity: 1000
@@ -377,8 +377,8 @@ InputManager:
     m_Name: Key7
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '&'
-    positiveButton: 7
+    negativeButton: 7
+    positiveButton: d
     altNegativeButton: '[7]'
     altPositiveButton: 
     gravity: 1000
@@ -393,8 +393,8 @@ InputManager:
     m_Name: Key8
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '*'
-    positiveButton: 8
+    negativeButton: 8
+    positiveButton: f
     altNegativeButton: '[8]'
     altPositiveButton: 
     gravity: 1000
