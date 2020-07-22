@@ -12,11 +12,14 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     public int keyPressed = -1; // Not sure if it should stay as -1.
     public int points = 0;
     public int timer = 5;
+    public int lives = 3; // Does counting from 0 affect this?
 
     public bool coinAnswer = false;
 
     public Text scoreTextNumber;
-    public Text keyDisplayText1;    // There is alot of these and thus a better way should done during the polish stage.
+    public Text Displaylives;
+
+    public Text keyDisplayText1;    // There is alot of these and thus a better way should be done during the polish stage.
     public Text keyDisplayText2;
     public Text keyDisplayText3;
     public Text keyDisplayText4;
@@ -34,6 +37,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
 
     void Start()
     {
+        print("Starting lives " + lives);
         coinDisplayTime = WaitAndPrint(1.0f);
         StartCoroutine(coinDisplayTime);
         Reset();
@@ -48,6 +52,8 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     // Update is called once per frame
     void Update()
     {
+        Displaylives.text = lives.ToString();
+
         //print("Update start!");
         Controls();
         //print("Controls");
@@ -116,7 +122,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
 
     public void Controls()
     {
-        print("Inside the controls method");
+        //print("Inside the controls method");
         if (Input.GetButtonDown("Key1"))
         {
             print("Key 1 has been pressed");
@@ -124,6 +130,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyDisplayText1.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
             // PLAY AUDIO call audio method down bellow if not currently playing audio then play audio clip.
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key2"))
@@ -132,6 +139,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 1;
             keyDisplayText2.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key3"))
@@ -140,6 +148,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 2;
             keyDisplayText3.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key4"))
@@ -148,6 +157,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 3;
             keyDisplayText4.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key5"))
@@ -156,6 +166,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 4;
             keyDisplayText5.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key6"))
@@ -164,6 +175,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 5;
             keyDisplayText6.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key7"))
@@ -172,6 +184,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 6;
             keyDisplayText7.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         if (Input.GetButtonDown("Key8"))
@@ -180,6 +193,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             keyPressed = 7;
             keyDisplayText8.GetComponent<Text>().color = Color.green;
             WrongKeyaudio();
+            print("Decrease lives by 1."); LifeCounter();
         }
 
         //else { keyPressed = -1; }
@@ -190,6 +204,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     {
         audioSource.clip = wrongChoice;
         audioSource.Play();
+        //print("Decrease lives by 1."); LifeCounter();
         //if (coinAnswer == false) { points--; }
         //points--;
         //print("minus points" + points);
@@ -204,11 +219,26 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         print("increase points " + points);
     }
 
+    void LifeCounter()
+    {
+        lives--;    // maybe if lives greater than 0, decrease by 1.
+        print(lives);
+
+        if (lives <= 0)
+        {
+            print("Reset points");
+            points = 0;
+            Reset();
+            // Reset method or reset the score or call one after the other or a new method that combines the two of them under a new name HardReset().
+        }
+    }
+
     void Reset()
     {
         keyPressed = -1;
         timer = 5;
         coins[coinSelected].SetActive(false);
+        lives = 3;
         //coinAnswer = false;
 
         keyDisplayText1.GetComponent<Text>().color = Color.black;
