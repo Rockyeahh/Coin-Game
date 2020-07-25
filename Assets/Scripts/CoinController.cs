@@ -228,6 +228,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         {
             print("Reset points");
             points = 0;
+            lives = 3;
             Reset();
             // Reset method or reset the score or call one after the other or a new method that combines the two of them under a new name HardReset().
         }
@@ -238,7 +239,6 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         keyPressed = -1;
         timer = 5;
         coins[coinSelected].SetActive(false);
-        lives = 3;
         //coinAnswer = false;
 
         keyDisplayText1.GetComponent<Text>().color = Color.black;
