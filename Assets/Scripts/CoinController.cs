@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class CoinController : MonoBehaviour    // Rename it CoinController
 {
     public GameObject[] coins;   // 8 coins. 1p, 2p, 5p, 10p, 20p, 50, £1, £2.
+    public GameObject loseText;
 
     public int coinSelected;   // Maybe these need to be -1 too? This shouldn't affect things.
     public int correctNumber;
     public int keyPressed = -1; // Not sure if it should stay as -1.
     public int points = 0;
-    public int timer = 5;
+    public int timer = 5;   // shows 1 less in the inspector because it starts at 0?   // Can I make this into a float and call it in the wait time method in some way?
     public int lives = 3; // Does counting from 0 affect this?
+    public int currentTimer;
 
     public bool coinAnswer = false;
 
@@ -33,62 +35,27 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     public AudioClip wrongChoice;
     public AudioClip correctChoice;
 
-    private IEnumerator coinDisplayTime;      // Make public?
+    public bool controlsActive = true;
+    public bool potatoe = false;
+
+    public IEnumerator coinDisplayTime;      // Should this be public? // Even when public it is not viewable in the inspector.
 
     void Start()
     {
-        print("Starting lives " + lives);
-        coinDisplayTime = WaitAndPrint(1.0f);
+        //currentTimer = timer;
+        controlsActive = true;
+
+        coinDisplayTime = WaitAndPrint(5f);
         StartCoroutine(coinDisplayTime);
         Reset();
 
-        setCoinsValues();   //sets the controls in a method.
-        //Associate each of the keys with a coin/element.
-
         audioSource = GetComponent<AudioSource>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Displaylives.text = lives.ToString();
-
-        //print("Update start!");
-        Controls();
-        //print("Controls");
-        if (keyPressed == correctNumber) { coinAnswer = true; CorrectChoiceaudio(); Reset(); }
-        //else { coinAnswer = false; }
-
-        //else if (keyPressed > correctNumber || keyPressed < correctNumber) { points++; print(points); }  // It is still printing the wrong button constantly.
-        // Also change the displayed number (Reset) if you hit the wrong key.
-
-        //else if (keyPressed != correctNumber) { print("minus points"); } // Moved to the wrong audio method bellow controls.
-
-        //print(timer);
-        //print(points);
-        //print("correct Number " + correctNumber);
-
-        scoreTextNumber.text = points.ToString();
-
-        if (timer == 0)
-        {
-            timer = 5;                               // Resets the timer.  // Maybe have this as timer = curentTime and then later just say currentTime = timer when Reset.
-            coins[coinSelected].SetActive(false);    // Resets the coin selected.
-        }
-
-        // Some kind of decrease points by 1 code, may be needed much later on.
-
-    }
-
-    public void setCoinsValues()
-    {
-        //coins[0] = keyPressed1; Maybe keyPressed1 needs to be a boolean, maybe an array of booleans?
-        //          SOMEHOW the coins array needs to take in the number entered as another value.
     }
 
     private IEnumerator WaitAndPrint(float waitTime)
     {
+        //waitTime = 5f; // This affects the time, the timer and current timer stuff that I was doing, wasn't being counted at all!
+
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
@@ -112,13 +79,65 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             //print("coinSelected " + coinSelected);
             //print("Choose a coin");                                                          // All the coins should have the same position but be disabled.
             //print("Decrease timer by 1");                                                    // Whereas the bottom of the screen display should be seperate.        
-            if (timer > 0)                                                                   // These will just be UI.images without the score worth or being in this array.
-            {                                                                                // They will look the same but they won't be affected by this set active code.
-                timer--;
-            }
+            //if (timer > 0) 
+            // if (currentTimer > 0)                                                                   // These will just be UI.images without the score worth or being in this array.
+            // {                                                                                // They will look the same but they won't be affected by this set active code.
+            //timer--;
+            //     currentTimer--;
+            //    print("currentTimer decrease");
+            //}
+
+            // if (waitTime == 0)
+            //  {
+            //      potatoe = true;
+            //  }
         }
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        //print("timer " + timer);
+        //print("currentTimer " + currentTimer);
+        Displaylives.text = lives.ToString();
+
+        //print("Update start!");
+        if (controlsActive == true)
+        {
+            Controls();
+            //print("Controls");
+            if (keyPressed == correctNumber) { coinAnswer = true; CorrectChoiceaudio(); Reset(); }
+            //else { coinAnswer = false; }
+
+            //else if (keyPressed > correctNumber || keyPressed < correctNumber) { points++; print(points); }  // It is still printing the wrong button constantly.
+            // Also change the displayed number (Reset) if you hit the wrong key.
+
+            //else if (keyPressed != correctNumber) { print("minus points"); } // Moved to the wrong audio method bellow controls.
+
+            //print(timer);
+            //print(points);
+            //print("correct Number " + correctNumber);
+
+            scoreTextNumber.text = points.ToString();
+
+            //if (timer == 0)
+            //if (currentTimer == 0)
+          //  if (currentTimer == 0)
+          //  {
+                //timer = 5;
+          //      currentTimer = timer;                               // Resets the timer.  // Maybe have this as timer = curentTime and then later just say currentTime = timer when Reset.
+          //      coins[coinSelected].SetActive(false);    // Resets the coin selected.
+           // }
+
+            // Some kind of decrease points by 1 code, may be needed much later on.
+
+      //  if (potatoe == true)
+      //      {
+       //         coins[coinSelected].SetActive(false);    // Resets the coin selected.
+       //     }
+
+        }
+    }
 
     public void Controls()
     {
@@ -221,25 +240,31 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
 
     void LifeCounter()
     {
-        lives--;    // maybe if lives greater than 0, decrease by 1.
+        lives--;    // maybe if lives are greater than 0, decrease by 1.
         print(lives);
 
         if (lives <= 0)
         {
             print("Reset points");
             points = 0;
-            lives = 3;
-            Reset();
-            // Reset method or reset the score or call one after the other or a new method that combines the two of them under a new name HardReset().
+            loseText.SetActive(true);
+            controlsActive = false;
+            // if statement here that is like set would you like to try again text to active.
+            // Maybe not an if statement, maybe just a line of code that sets it active.
+            // By pressing Yes in the game it resets the lives and everything anyway.
+
+            // KEEP the bellow lives and reset code commented out and this way I can activate them again if I need them.
+            //lives = 3;
+            //Reset();
         }
     }
 
     void Reset()
     {
         keyPressed = -1;
-        timer = 5;
+        //timer = 5;
+        //currentTimer = timer;
         coins[coinSelected].SetActive(false);
-        //coinAnswer = false;
 
         keyDisplayText1.GetComponent<Text>().color = Color.black;
         keyDisplayText2.GetComponent<Text>().color = Color.black;
