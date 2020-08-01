@@ -12,9 +12,9 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     public int correctNumber;
     public int keyPressed = -1; // Not sure if it should stay as -1.
     public int points = 0;
-    public int timer = 5;   // shows 1 less in the inspector because it starts at 0?   // Can I make this into a float and call it in the wait time method in some way?
+    //public int timer = 5;   // shows 1 less in the inspector because it starts at 0?   // Can I make this into a float and call it in the wait time method in some way?
     public int lives = 3; // Does counting from 0 affect this?
-    public int currentTimer;
+    //public int currentTimer;
 
     public bool coinAnswer = false;
 
@@ -36,14 +36,17 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     public AudioClip correctChoice;
 
     public bool controlsActive = true;
-    public bool potatoe = false;
+    //public bool potatoe = false;
+    public bool someBool = false;
 
     public IEnumerator coinDisplayTime;      // Should this be public? // Even when public it is not viewable in the inspector.
 
     void Start()
     {
+        someBool = false;
+
         //currentTimer = timer;
-        controlsActive = true;
+        //controlsActive = true;
 
         coinDisplayTime = WaitAndPrint(5f);
         StartCoroutine(coinDisplayTime);
@@ -63,6 +66,9 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
             //print("Reset");
             coinSelected = Random.Range(0, coins.Length);
             correctNumber = coinSelected;
+
+            //someBool = false;
+
             //print(correctNumber);
 
             //correctAnswerCoin = true;
@@ -102,11 +108,12 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         Displaylives.text = lives.ToString();
 
         //print("Update start!");
-        if (controlsActive == true)
-        {
+        //if (controlsActive == true)
+        //{
             Controls();
             //print("Controls");
-            if (keyPressed == correctNumber) { coinAnswer = true; CorrectChoiceaudio(); Reset(); }
+            if (keyPressed == correctNumber) { coinAnswer = true; CorrectChoiceaudio(); Reset(); } // add before Reset someBool = false and maybe else {someBool = true;}
+            //else { someBool = true; }
             //else { coinAnswer = false; }
 
             //else if (keyPressed > correctNumber || keyPressed < correctNumber) { points++; print(points); }  // It is still printing the wrong button constantly.
@@ -136,7 +143,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
        //         coins[coinSelected].SetActive(false);    // Resets the coin selected.
        //     }
 
-        }
+        //}
     }
 
     public void Controls()
@@ -223,6 +230,11 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
     {
         audioSource.clip = wrongChoice;
         audioSource.Play();
+        someBool = true;
+        print("FUCKING someBool"); // This is called when it is wrong but also when it is correct.
+
+        //if (someBool == true) { lives--; }
+
         //print("Decrease lives by 1."); LifeCounter();
         //if (coinAnswer == false) { points--; }
         //points--;
@@ -236,19 +248,22 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         audioSource.Play();
         points++;
         print("increase points " + points);
+        //someBool = false;
     }
 
     void LifeCounter()
     {
-        lives--;    // maybe if lives are greater than 0, decrease by 1.
+         if (someBool == true) {lives--;}
+        //lives--;    // maybe if lives are greater than 0, decreased by 1.
         print(lives);
 
         if (lives <= 0)
         {
             print("Reset points");
             points = 0;
-            loseText.SetActive(true);
-            controlsActive = false;
+
+            //loseText.SetActive(true);
+            //controlsActive = false;
             // if statement here that is like set would you like to try again text to active.
             // Maybe not an if statement, maybe just a line of code that sets it active.
             // By pressing Yes in the game it resets the lives and everything anyway.
@@ -265,6 +280,7 @@ public class CoinController : MonoBehaviour    // Rename it CoinController
         //timer = 5;
         //currentTimer = timer;
         coins[coinSelected].SetActive(false);
+        someBool = false;
 
         keyDisplayText1.GetComponent<Text>().color = Color.black;
         keyDisplayText2.GetComponent<Text>().color = Color.black;
